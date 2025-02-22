@@ -1,5 +1,4 @@
-import UserContext from './components/UserContext';
-import React, { useState } from 'react';
+import { UserContext } from "./contexts/UserContext"; import React, { useState } from 'react';
 import UserProfile from './components/UserProfile';
 import Header from './components/Header';
 import MainContent from './components/MainContent';
