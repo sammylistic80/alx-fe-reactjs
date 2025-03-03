@@ -1,3 +1,4 @@
+import SearchBar from "./components/SearchBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RecipeDetails from "./components/RecipeDetails";
 import RecipeList from './components/RecipeList';
@@ -13,6 +14,7 @@ function App() {
   return (
     <>
       <div>
+        <SearchBar />
         <Router>
           <Routes>
             <Route path="/" element={<RecipeList />} />
