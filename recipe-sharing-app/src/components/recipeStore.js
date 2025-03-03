@@ -1,34 +1,45 @@
+// src/components/recipeStore.js
 import { create } from 'zustand';
 
 const useRecipeStore = create((set) => ({
   recipes: [],
-  searchTerm: '',
-  filteredRecipes: [],
+  favorites: [],
+  recommendations: [],
 
   // Existing actions
   addRecipe: (newRecipe) =>
     set((state) => ({ recipes: [...state.recipes, newRecipe] })),
-  
-  // Update the search term in the store
-  setSearchTerm: (term) => set({ searchTerm: term }),
-
-  // Compute the filtered recipes based on the current search term
-  filterRecipes: () =>
+  updateRecipe: (updatedRecipe) =>
     set((state) => ({
-      filteredRecipes: state.recipes.filter((recipe) =>
-        recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-      )
+      recipes: state.recipes.map(recipe =>
+        recipe.id === updatedRecipe.id ? updatedRecipe : recipe
+      ),
+    })),
+  deleteRecipe: (recipeId) =>
+    set((state) => ({
+      recipes: state.recipes.filter(recipe => recipe.id !== recipeId),
+    })),
+  setRecipes: (recipes) => set({ recipes }),
+
+  // Favorites actions
+  addFavorite: (recipeId) =>
+    set((state) => ({
+      favorites: [...state.favorites, recipeId],
+    })),
+  removeFavorite: (recipeId) =>
+    set((state) => ({
+      favorites: state.favorites.filter(id => id !== recipeId),
     })),
 
-  // Optional: You can also add updateRecipe and deleteRecipe here if needed
-  updateRecipe: (updatedRecipe) => set((state) => ({
-    recipes: state.recipes.map((recipe) =>
-      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
-    )
-  })),
-  deleteRecipe: (recipeId) => set((state) => ({
-    recipes: state.recipes.filter((recipe) => recipe.id !== recipeId)
-  })),
+  // Generate recommendations (mock implementation)
+  generateRecommendations: () =>
+    set((state) => {
+      // For this example, recommend recipes that are favorites and pass a random filter.
+      const recommended = state.recipes.filter(recipe =>
+        state.favorites.includes(recipe.id) && Math.random() > 0.5
+      );
+      return { recommendations: recommended };
+    }),
 }));
 
 export default useRecipeStore;

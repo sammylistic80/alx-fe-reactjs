@@ -1,4 +1,6 @@
 import SearchBar from "./components/SearchBar";
+import FavoritesList from "./components/FavoritesList";
+import RecommendationsList from "./components/RecommendationsList";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RecipeDetails from "./components/RecipeDetails";
 import RecipeList from './components/RecipeList';
@@ -14,6 +16,8 @@ function App() {
   return (
     <>
       <div>
+        <FavoritesList />
+        <RecommendationsList />
         <SearchBar />
         <Router>
           <Routes>
