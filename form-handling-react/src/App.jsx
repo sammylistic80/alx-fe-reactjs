@@ -11,6 +11,8 @@ function App() {
   return (
     <>
       <div>
+        <RegRegistrationForm />
+        <formikForm />
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
