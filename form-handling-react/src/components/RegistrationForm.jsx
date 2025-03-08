@@ -2,21 +2,19 @@ import { useState } from "react";
 
 const RegistrationForm = () => {
   // State for form inputs
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // Handle input changes
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleUsernameChange = (e) => setUsername(e.target.value);
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`User Registered:\nUsername: ${formData.username}\nEmail: ${formData.email}`);
+    alert(`User Registered:\nUsername: ${username}\nEmail: ${email}`);
   };
 
   return (
@@ -29,8 +27,8 @@ const RegistrationForm = () => {
           <input 
             type="text" 
             name="username" 
-            value={formData.username} // ✅ Controlled value
-            onChange={handleChange} 
+            value={username} // ✅ Matches requirement
+            onChange={handleUsernameChange} 
           />
         </div>
 
@@ -40,8 +38,8 @@ const RegistrationForm = () => {
           <input 
             type="email" 
             name="email" 
-            value={formData.email} // ✅ Controlled value
-            onChange={handleChange} 
+            value={email} // ✅ Matches requirement
+            onChange={handleEmailChange} 
           />
         </div>
 
@@ -51,8 +49,8 @@ const RegistrationForm = () => {
           <input 
             type="password" 
             name="password" 
-            value={formData.password} // ✅ Controlled value
-            onChange={handleChange} 
+            value={password} // ✅ Matches requirement
+            onChange={handlePasswordChange} 
           />
         </div>
 
