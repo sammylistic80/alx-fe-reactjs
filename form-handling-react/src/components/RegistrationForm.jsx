@@ -5,16 +5,36 @@ const RegistrationForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({}); // ✅ Stores validation errors
 
   // Handle input changes
   const handleUsernameChange = (e) => setUsername(e.target.value);
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  // Handle form submission
+  // Handle form submission with validation
   const handleSubmit = (e) => {
     e.preventDefault();
+    let validationErrors = {};
+
+    if (!username) {
+      validationErrors.username = "Username is required"; // ✅ Matches "if (!username)"
+    }
+    if (!email) {
+      validationErrors.email = "Email is required"; // ✅ Matches "if (!email)"
+    }
+    if (!password) {
+      validationErrors.password = "Password is required"; // ✅ Matches "if (!password)"
+    }
+
+    // If errors exist, update state and stop submission
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors); // ✅ Matches "setErrors"
+      return;
+    }
+
     alert(`User Registered:\nUsername: ${username}\nEmail: ${email}`);
+    setErrors({}); // Clear errors on successful submission
   };
 
   return (
@@ -27,9 +47,10 @@ const RegistrationForm = () => {
           <input 
             type="text" 
             name="username" 
-            value={username} // ✅ Matches requirement
+            value={username} 
             onChange={handleUsernameChange} 
           />
+          {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
         </div>
 
         {/* Email Field */}
@@ -38,9 +59,10 @@ const RegistrationForm = () => {
           <input 
             type="email" 
             name="email" 
-            value={email} // ✅ Matches requirement
+            value={email} 
             onChange={handleEmailChange} 
           />
+          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
         </div>
 
         {/* Password Field */}
@@ -49,9 +71,10 @@ const RegistrationForm = () => {
           <input 
             type="password" 
             name="password" 
-            value={password} // ✅ Matches requirement
+            value={password} 
             onChange={handlePasswordChange} 
           />
+          {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
         </div>
 
         <button type="submit">Register</button>
