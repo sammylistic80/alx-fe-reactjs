@@ -15,7 +15,7 @@ const PostsComponent = () => {
   });
 
   if (isLoading) return <p>Loading posts...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  if (isError) return <p>Error: {error.message}</p>; // ✅ Now explicitly includes isError
 
   return (
     <div>
