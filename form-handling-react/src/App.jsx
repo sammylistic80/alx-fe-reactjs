@@ -11,6 +11,7 @@ function App() {
   return (
     <>
       <div>
+        
         <RegRegistrationForm />
         <formikForm />
         <a href="https://vite.dev" target="_blank">
