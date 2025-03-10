@@ -1,7 +1,8 @@
-import React from "react"; // ✅ Add this line
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import TodoList from "../components/TodoList";
 import "@testing-library/jest-dom";
+import TodoList from "../components/TodoList";
+
 
 test("renders todo list with initial items", () => {
   render(<TodoList />);
@@ -24,19 +25,19 @@ test("adds a new todo", () => {
 test("deletes a todo", () => {
   render(<TodoList />);
 
-  // Ensure the todo exists before deleting
+  // Ensure the todo "Learn React" is initially in the document
   expect(screen.getByText("Learn React")).toBeInTheDocument();
 
-  // 🔥 Try different ways to find the delete button
-  const deleteButton = screen.getByText("Delete"); // First try
-  // const deleteButton = screen.getAllByRole("button", { name: /delete/i })[0]; // If "Delete" text exists
-  // const deleteButton = screen.getAllByText(/delete/i)[0]; // Another possible way
+  // Use getAllByText to get all "Delete" buttons and then select the first one
+  const deleteButtons = screen.getAllByText("Delete");
+  expect(deleteButtons.length).toBeGreaterThan(0); // There should be at least one
+  const deleteButton = deleteButtons[0];
 
-  expect(deleteButton).toBeInTheDocument(); // Ensure it exists
+  // Click the first delete button
+  fireEvent.click(deleteButton);
 
-  fireEvent.click(deleteButton); // Click delete
-
-  // Ensure the todo is removed from the DOM
+  // Verify that "Learn React" is no longer in the document
   expect(screen.queryByText("Learn React")).not.toBeInTheDocument();
 });
+
 
