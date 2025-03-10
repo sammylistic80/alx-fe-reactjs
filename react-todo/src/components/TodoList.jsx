@@ -1,41 +1,31 @@
-import { useState } from "react";
-import AddTodoForm from "./AddTodoForm";
-
-// src/components/TodoList.jsx
 import React, { useState } from "react";
+import AddTodoForm from "./AddTodoForm"; // ✅ Import
 
 const TodoList = () => {
   const [todos, setTodos] = useState(["Learn React", "Build a Todo App"]);
-  const [newTodo, setNewTodo] = useState("");
 
-  const addTodo = () => {
+  const addTodo = (newTodo) => {
     if (newTodo.trim() !== "") {
       setTodos([...todos, newTodo]);
-      setNewTodo("");
     }
-  };
-
-  const deleteTodo = (index) => {
-    setTodos(todos.filter((_, i) => i !== index));
   };
 
   return (
     <div>
       <h2>Todo List</h2>
-      <input
-        type="text"
-        placeholder="Add a new todo..."
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
-      />
-      <button onClick={addTodo}>Add</button>
+      
+      {/* ✅ Use the AddTodoForm component here */}
+      <AddTodoForm addTodo={addTodo} />
+      
       <ul>
         {todos.map((todo, index) => (
           <li key={index}>
-            {todo} <button onClick={() => deleteTodo(index)}>Delete</button>
+            {todo.text}
+            <button onClick={() => deleteTodo(index)}>Delete</button> {/* 🔥 Make sure this exists */}
           </li>
         ))}
       </ul>
+
     </div>
   );
 };
