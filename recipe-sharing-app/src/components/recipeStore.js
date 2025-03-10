@@ -5,6 +5,7 @@ const useRecipeStore = create((set) => ({
   recipes: [],
   favorites: [],
   recommendations: [],
+  searchTerm: "", // ✅ Added searchTerm
 
   // Existing actions
   addRecipe: (newRecipe) =>
@@ -20,6 +21,9 @@ const useRecipeStore = create((set) => ({
       recipes: state.recipes.filter(recipe => recipe.id !== recipeId),
     })),
   setRecipes: (recipes) => set({ recipes }),
+
+  // ✅ Added setSearchTerm action
+  setSearchTerm: (term) => set({ searchTerm: term }),
 
   // Favorites actions
   addFavorite: (recipeId) =>
