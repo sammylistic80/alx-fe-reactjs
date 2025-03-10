@@ -1,10 +1,9 @@
-export default {
-    testEnvironment: "jsdom",
-    transform: {
-      "^.+\\.jsx?$": "babel-jest",
-    },
-    moduleNameMapper: {
-      "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-    },
-  };
-  
+module.exports = {
+  testEnvironment: "jsdom",
+  transform: {
+    "^.+\\.jsx?$": "babel-jest",
+  },
+  moduleNameMapper: {
+    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+  },
+};
