@@ -4,39 +4,42 @@ function AddRecipeForm() {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [steps, setSteps] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({}); // ✅ Store validation errors
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    // Validation
-    if (!title || !ingredients || !steps) {
-      setError("All fields are required.");
-      return;
-    }
+  const validate = () => {
+    let tempErrors = {};
+
+    if (!title.trim()) tempErrors.title = "Recipe title is required.";
+    if (!ingredients.trim()) tempErrors.ingredients = "Ingredients cannot be empty.";
+    if (!steps.trim()) tempErrors.steps = "Preparation steps cannot be empty.";
 
     const ingredientsArray = ingredients.split(",").map((item) => item.trim());
     if (ingredientsArray.length < 2) {
-      setError("Please enter at least two ingredients, separated by commas.");
-      return;
+      tempErrors.ingredients = "Please enter at least two ingredients.";
     }
 
-    setError(""); // Clear previous errors
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0; // ✅ Returns true if no errors
+  };
 
-    // Mock recipe object
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!validate()) return; // ✅ Only proceed if validation passes
+
     const newRecipe = {
       id: Date.now(),
       title,
-      ingredients: ingredientsArray,
+      ingredients: ingredients.split(",").map((item) => item.trim()),
       steps,
     };
 
     console.log("New Recipe Added:", newRecipe);
 
-    // Reset form after submission
     setTitle("");
     setIngredients("");
     setSteps("");
+    setErrors({}); // ✅ Clear errors after submission
   };
 
   return (
@@ -44,8 +47,6 @@ function AddRecipeForm() {
       <h2 className="text-2xl font-bold text-center text-blue-700 mb-4">
         Add a New Recipe
       </h2>
-
-      {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Title Field */}
@@ -58,6 +59,7 @@ function AddRecipeForm() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+          {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
         </div>
 
         {/* Ingredients Field */}
@@ -70,6 +72,7 @@ function AddRecipeForm() {
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
           ></textarea>
+          {errors.ingredients && <p className="text-red-500 text-sm">{errors.ingredients}</p>}
         </div>
 
         {/* Steps Field */}
@@ -82,6 +85,7 @@ function AddRecipeForm() {
             value={steps}
             onChange={(e) => setSteps(e.target.value)}
           ></textarea>
+          {errors.steps && <p className="text-red-500 text-sm">{errors.steps}</p>}
         </div>
 
         {/* Submit Button */}
