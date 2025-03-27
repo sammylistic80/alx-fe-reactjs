@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetchAdvancedUserSearch } from "../services/githubService";
+import { fetchUserData } from "../services/githubService";
 
 function Search() {
   const [username, setUsername] = useState("");
@@ -18,7 +18,7 @@ function Search() {
 
     try {
       const query = { username, location, minRepos };
-      const data = await fetchAdvancedUserSearch(query);
+      const data = await fetchUserData(query);
       if (data.items.length > 0) {
         setUsers(data.items);
       } else {
